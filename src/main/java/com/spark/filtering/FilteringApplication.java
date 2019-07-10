@@ -17,16 +17,7 @@ public class FilteringApplication {
 		SpringApplication.run(FilteringApplication.class, args);
 	}
 
-	//If matches.json change, we can redeploy the application
-	@Bean
-	public Matches matches() throws  Exception{
-		ObjectMapper objectMapper = new ObjectMapper();
 
-		//read json file and convert to matches object
-		Matches matches = objectMapper.readValue(new File("matches.json"), Matches.class);
-
-		return matches;
-	}
 
 
 
