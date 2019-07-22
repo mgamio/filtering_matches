@@ -2,13 +2,13 @@ package com.spark.filtering.model;
 
 public class User {
     private String display_name;
-    private Integer age;
+    private int age;
     private String job_title;
-    private Integer height_in_cm;
+    private int height_in_cm;
     private City city;
     private String main_photo;
     private double compatibility_score;
-    private Integer contacts_exchanged;
+    private int contacts_exchanged;
     private Boolean favourite;
     private String religion;
 
@@ -20,11 +20,11 @@ public class User {
         this.display_name = display_name;
     }
 
-    public Integer getAge() {
+    public int getAge() {
         return age;
     }
 
-    public void setAge(Integer age) {
+    public void setAge(int age) {
         this.age = age;
     }
 
@@ -36,11 +36,11 @@ public class User {
         this.job_title = job_title;
     }
 
-    public Integer getHeight_in_cm() {
+    public int getHeight_in_cm() {
         return height_in_cm;
     }
 
-    public void setHeight_in_cm(Integer height_in_cm) {
+    public void setHeight_in_cm(int height_in_cm) {
         this.height_in_cm = height_in_cm;
     }
 
@@ -68,11 +68,11 @@ public class User {
         this.compatibility_score = compatibility_score;
     }
 
-    public Integer getContacts_exchanged() {
+    public int getContacts_exchanged() {
         return contacts_exchanged;
     }
 
-    public void setContacts_exchanged(Integer contacts_exchanged) {
+    public void setContacts_exchanged(int contacts_exchanged) {
         this.contacts_exchanged = contacts_exchanged;
     }
 
