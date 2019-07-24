@@ -12,12 +12,13 @@ import java.io.File;
 @Configuration
 public class AppBeansConfig {
 
+    @Bean
     public UserService userService() throws  Exception {
         return new UserServiceImpl(matches());
     }
 
     @Bean
-    public Matches matches() throws  Exception{
+    public Matches matches() throws  Exception {
         ObjectMapper objectMapper = new ObjectMapper();
 
         //read json file and convert to matches object
@@ -25,4 +26,5 @@ public class AppBeansConfig {
 
         return matches;
     }
+
 }

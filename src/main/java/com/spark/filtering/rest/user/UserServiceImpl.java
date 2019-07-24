@@ -20,7 +20,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Matches filtering(FilterRequest filter) throws Exception {
+    public List<User> all() throws Exception {
+        return matches.getMatches();
+    }
+
+    @Override
+    public List<User> filtering(FilterRequest filter) throws Exception {
 
         Matches matchesResult = new Matches();
         ArrayList<User> newListOfMatches = new ArrayList<>();
@@ -31,9 +36,7 @@ public class UserServiceImpl implements UserService {
                 newListOfMatches.add(user);
         }
 
-        matchesResult.setMatches(newListOfMatches);
-
-        return matchesResult;
+        return newListOfMatches;
     }
 
     boolean isCandidate(User user, FilterRequest filter) {

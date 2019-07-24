@@ -49,7 +49,7 @@ public class UserServiceTest {
         when(matches.getMatches()).thenReturn(listOfUsers);
         FilterRequest request = new FilterRequest();
         request.setHasPhoto(true);
-        assertEquals(1, userService.filtering(request).getMatches().size()) ;
+        assertEquals(1, userService.filtering(request).size()) ;
 
     }
 
@@ -62,7 +62,7 @@ public class UserServiceTest {
         when(matches.getMatches()).thenReturn(listOfUsers);
         FilterRequest request = new FilterRequest();
         request.setInContact(true);
-        assertEquals(1, userService.filtering(request).getMatches().size()) ;
+        assertEquals(1, userService.filtering(request).size()) ;
     }
 
     @Test
@@ -77,7 +77,7 @@ public class UserServiceTest {
         when(matches.getMatches()).thenReturn(listOfUsers);
         FilterRequest request = new FilterRequest();
         request.setFavourite(true);
-        assertEquals(1, userService.filtering(request).getMatches().size()) ;
+        assertEquals(1, userService.filtering(request).size()) ;
     }
 
     @Test
@@ -92,7 +92,7 @@ public class UserServiceTest {
         when(matches.getMatches()).thenReturn(listOfUsers);
         FilterRequest request = new FilterRequest();
         request.setCompatibilityScore(0.95d);
-        assertEquals(1, userService.filtering(request).getMatches().size()) ;
+        assertEquals(1, userService.filtering(request).size()) ;
     }
 
     @Test
@@ -107,7 +107,7 @@ public class UserServiceTest {
         when(matches.getMatches()).thenReturn(listOfUsers);
         FilterRequest request = new FilterRequest();
         request.setAge(45);
-        assertEquals(1, userService.filtering(request).getMatches().size()) ;
+        assertEquals(1, userService.filtering(request).size()) ;
     }
 
     @Test
@@ -125,7 +125,7 @@ public class UserServiceTest {
         when(matches.getMatches()).thenReturn(listOfUsers);
         FilterRequest request = new FilterRequest();
         request.setHeight(185);
-        assertEquals(2, userService.filtering(request).getMatches().size()) ;
+        assertEquals(2, userService.filtering(request).size()) ;
     }
 
     @Test
@@ -150,7 +150,7 @@ public class UserServiceTest {
         when(matches.getMatches()).thenReturn(listOfUsers);
         FilterRequest request = new FilterRequest();
         request.setDistanceInKm(210);
-        assertEquals(1, userService.filtering(request).getMatches().size()) ;
+        assertEquals(1, userService.filtering(request).size()) ;
     }
 
 
