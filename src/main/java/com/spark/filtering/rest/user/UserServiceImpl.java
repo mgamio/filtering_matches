@@ -27,11 +27,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> filtering(FilterRequest filter) throws Exception {
 
-        Matches matchesResult = new Matches();
-        ArrayList<User> newListOfMatches = new ArrayList<>();
-        List<User> listOfMatches = matches.getMatches();
+        if (filter == null)
+            return matches.getMatches();
 
-        for (User user : listOfMatches) {
+        ArrayList<User> newListOfMatches = new ArrayList<>();
+
+        for (User user : matches.getMatches()) {
             if (isCandidate(user, filter))
                 newListOfMatches.add(user);
         }
@@ -39,7 +40,7 @@ public class UserServiceImpl implements UserService {
         return newListOfMatches;
     }
 
-    boolean isCandidate(User user, FilterRequest filter) {
+    public boolean isCandidate(User user, FilterRequest filter) {
 
         if (filter.getHasPhoto() != null) {
             if (filter.getHasPhoto() == true && user.getMain_photo() == null)
@@ -77,7 +78,9 @@ public class UserServiceImpl implements UserService {
         return true;
     }
 
-    double distance(City city) {
+    public double distance(City city) {
+
+        //Ref: https://www.geodatasource.com/developers/java
 
         if ((lat1 == city.getLat()) && (lon1 == city.getLon())) {
             return 0;
