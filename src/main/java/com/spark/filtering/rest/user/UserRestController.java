@@ -29,10 +29,10 @@ public class UserRestController {
                 throw new ConstraintViolationException("Compatibility Score must be between 1% to 99%");
         }
 
-        if (request.getAge() > 0 && request.getAge() < 18)
+        if (request.getAge() != null && request.getAge().intValue() < 18)
             throw new ConstraintViolationException("Age must be greater than or equal to 18 years old");
 
-        if (request.getHeight() > 0 && request.getHeight() < 135)
+        if (request.getHeight() != null && request.getHeight().intValue() < 135)
             throw new ConstraintViolationException("Height must be greater than or equal to 135cm");
 
         List<User> response = userService.find(request);
