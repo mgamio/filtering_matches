@@ -1,10 +1,13 @@
 package com.spark.filtering.rest.user;
 
+import com.spark.filtering.exception.ConstraintViolationException;
+import com.spark.filtering.exception.ResourceNotFoundException;
 import com.spark.filtering.model.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -19,9 +22,20 @@ public class UserRestController {
 
     @CrossOrigin(origins = "http://localhost:4200")
     @PostMapping(value="/filter")
-    public ResponseEntity<?> filter(@RequestBody FilterRequest request) throws Exception {
+    public ResponseEntity<?> filter(@Valid @RequestBody FilterRequest request) throws ConstraintViolationException, Exception {
 
-        List<User> response = userService.filtering(request);
+        if (request.getCompatibilityScore() > 0) {
+            if (request.getCompatibilityScore() < 1 || request.getCompatibilityScore() > 99)
+                throw new ConstraintViolationException("Compatibility Score must be between 1% to 99%");
+        }
+
+        if (request.getAge() > 0 && request.getAge() < 18)
+            throw new ConstraintViolationException("Age must be greater than or equal to 18 years old");
+
+        if (request.getHeight() > 0 && request.getHeight() < 135)
+            throw new ConstraintViolationException("Height must be greater than or equal to 135cm");
+
+        List<User> response = userService.find(request);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

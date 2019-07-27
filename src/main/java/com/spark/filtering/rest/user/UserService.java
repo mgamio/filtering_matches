@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface UserService {
 
-    List<User> filtering(FilterRequest filter) throws Exception;
+    List<User> find(FilterRequest filter) throws Exception;
 
     List<User> all() throws Exception;
 

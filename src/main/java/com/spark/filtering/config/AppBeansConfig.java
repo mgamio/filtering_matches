@@ -2,6 +2,8 @@ package com.spark.filtering.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spark.filtering.model.Matches;
+import com.spark.filtering.rest.geo.GeoService;
+import com.spark.filtering.rest.geo.GeoServiceImpl;
 import com.spark.filtering.rest.user.UserService;
 import com.spark.filtering.rest.user.UserServiceImpl;
 import org.springframework.context.annotation.Bean;
@@ -14,7 +16,7 @@ public class AppBeansConfig {
 
     @Bean
     public UserService userService() throws  Exception {
-        return new UserServiceImpl(matches());
+        return new UserServiceImpl(matches(), geoService());
     }
 
     @Bean
@@ -25,6 +27,11 @@ public class AppBeansConfig {
         Matches matches = objectMapper.readValue(new File("matches.json"), Matches.class);
 
         return matches;
+    }
+
+    @Bean
+    public GeoService geoService() {
+        return new GeoServiceImpl();
     }
 
 }

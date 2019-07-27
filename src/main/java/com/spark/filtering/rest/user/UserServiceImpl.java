@@ -3,6 +3,7 @@ package com.spark.filtering.rest.user;
 import com.spark.filtering.model.City;
 import com.spark.filtering.model.Matches;
 import com.spark.filtering.model.User;
+import com.spark.filtering.rest.geo.GeoService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,12 +12,16 @@ public class UserServiceImpl implements UserService {
 
     private Matches matches;
 
-    //we assume London as the reference
-    private final double lat1 = 51.509865d;
-    private final double lon1 = -0.118092d;
+    private GeoService geoService;
 
-    public UserServiceImpl (Matches matches) {
+    //we assume London as the reference
+    private final double latitude1 = 51.509865d;
+    private final double longitude1 = -0.118092d;
+
+    public UserServiceImpl (Matches matches, GeoService geoService) {
+
         this.matches = matches;
+        this.geoService = geoService;
     }
 
     @Override
@@ -25,7 +30,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> filtering(FilterRequest filter) throws Exception {
+    public List<User> find(FilterRequest filter) throws Exception {
 
         if (filter == null)
             return matches.getMatches();
@@ -63,7 +68,7 @@ public class UserServiceImpl implements UserService {
                 return false;
         }
 
-        if (filter.getCompatibilityScore() > 0 && user.getCompatibility_score() < filter.getCompatibilityScore())
+        if (filter.getCompatibilityScore() > 0 && user.getCompatibility_score() < filter.getCompatibilityScore()/100)
             return false;
 
         if (filter.getAge() != null && user.getAge() < filter.getAge().intValue())
@@ -72,30 +77,11 @@ public class UserServiceImpl implements UserService {
         if (filter.getHeight() != null && user.getHeight_in_cm() < filter.getHeight().intValue())
             return false;
 
-        if (filter.getDistanceInKm() != null && distance(user.getCity()) >= filter.getDistanceInKm())
+        double distance = geoService.calculateDistance(latitude1, longitude1, user.getCity().getLat(), user.getCity().getLon());
+        if (filter.getDistanceInKm() != null && distance >= filter.getDistanceInKm())
             return false;
 
         return true;
-    }
-
-    public double distance(City city) {
-
-        //Ref: https://www.geodatasource.com/developers/java
-
-        if ((lat1 == city.getLat()) && (lon1 == city.getLon())) {
-            return 0;
-        }
-        else {
-            double theta = lon1 - city.getLon();
-            double dist = Math.sin(Math.toRadians(lat1)) * Math.sin(Math.toRadians(city.getLat()))
-                    + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(city.getLat())) * Math.cos(Math.toRadians(theta));
-            dist = Math.acos(dist);
-            dist = Math.toDegrees(dist);
-            dist = dist * 60 * 1.1515;
-            dist = dist * 1.609344; //to Km
-
-            return (dist);
-        }
     }
 
 }
