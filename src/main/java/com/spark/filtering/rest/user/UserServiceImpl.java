@@ -1,6 +1,5 @@
 package com.spark.filtering.rest.user;
 
-import com.spark.filtering.model.City;
 import com.spark.filtering.model.Matches;
 import com.spark.filtering.model.User;
 import com.spark.filtering.rest.geo.GeoService;
@@ -77,9 +76,11 @@ public class UserServiceImpl implements UserService {
         if (filter.getHeight() != null && user.getHeight_in_cm() < filter.getHeight().intValue())
             return false;
 
-        double distance = geoService.calculateDistance(latitude1, longitude1, user.getCity().getLat(), user.getCity().getLon());
-        if (filter.getDistanceInKm() != null && distance >= filter.getDistanceInKm())
-            return false;
+        if (filter.getDistanceInKm() != null) {
+            double distance = geoService.calculateDistance(latitude1, longitude1, user.getCity().getLat(), user.getCity().getLon());
+            if (distance >= filter.getDistanceInKm())
+                return false;
+        }
 
         return true;
     }

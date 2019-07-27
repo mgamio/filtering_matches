@@ -14,20 +14,12 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.awt.image.DataBufferUShort;
 import java.util.ArrayList;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 public class UserServiceTest {
-
-    //we assume London as the reference
-    private final double latitude1 = 51.509865d;
-    private final double longitude1 = -0.118092d;
 
     @TestConfiguration
     static class TestContextConfiguration {
@@ -193,7 +185,7 @@ public class UserServiceTest {
 
         when(matches.getMatches()).thenReturn(listOfUsers);
         FilterRequest request = new FilterRequest();
-        request.setDistanceInKm(210);
+        request.setDistanceInKm(272);
         assertEquals(1, userService.find(request).size()) ;
     }
 
